@@ -1,0 +1,132 @@
+diff -ruN a/qwt.pro b/qwt.pro
+--- a/qwt.pro	2019-01-02 19:21:31.000000000 +0300
++++ b/qwt.pro	2019-02-23 01:29:26.505954500 +0300
+@@ -6,6 +6,8 @@
+ # This library is free software; you can redistribute it and/or
+ # modify it under the terms of the Qwt License, Version 1.0
+ ################################################################
++CONFIG += conan_basic_setup
++include(../conanbuildinfo.pri)
+ 
+ include( qwtconfig.pri )
+ 
+diff -ruN a/qwtbuild.pri b/qwtbuild.pri
+--- a/qwtbuild.pri	2019-01-02 19:21:31.000000000 +0300
++++ b/qwtbuild.pri	2019-02-23 01:33:47.765129900 +0300
+@@ -20,20 +20,7 @@
+ # release/debug mode
+ ######################################################################
+ 
+-win32 {
+-    # On Windows you can't mix release and debug libraries.
+-    # The designer is built in release mode. If you like to use it
+-    # you need a release version. For your own application development you
+-    # might need a debug version.
+-    # Enable debug_and_release + build_all if you want to build both.
+-
+-    CONFIG           += debug_and_release
+-    CONFIG           += build_all
+-}
+-else {
+-
+-    CONFIG           += release
+-
++!win32 {
+     VER_MAJ           = $${QWT_VER_MAJ}
+     VER_MIN           = $${QWT_VER_MIN}
+     VER_PAT           = $${QWT_VER_PAT}
+diff -ruN a/qwtconfig.pri b/qwtconfig.pri
+--- a/qwtconfig.pri	2019-01-02 19:21:31.000000000 +0300
++++ b/qwtconfig.pri	2019-02-23 01:37:36.639480800 +0300
+@@ -72,34 +72,34 @@
+ # it will be a static library.
+ ######################################################################
+ 
+-QWT_CONFIG           += QwtDll
++QWT_CONFIG += QwtDll
+ 
+ ######################################################################
+ # QwtPlot enables all classes, that are needed to use the QwtPlot
+ # widget. 
+ ######################################################################
+ 
+-QWT_CONFIG       += QwtPlot
++QWT_CONFIG += QwtPlot
+ 
+ ######################################################################
+ # QwtWidgets enables all classes, that are needed to use the all other
+ # widgets (sliders, dials, ...), beside QwtPlot.
+ ######################################################################
+ 
+-QWT_CONFIG     += QwtWidgets
++QWT_CONFIG += QwtWidgets
+ 
+ ######################################################################
+ # If you want to display svg images on the plot canvas, or
+ # export a plot to a SVG document
+ ######################################################################
+ 
+-QWT_CONFIG     += QwtSvg
++QWT_CONFIG += QwtSvg
+ 
+ ######################################################################
+ # If you want to use a OpenGL plot canvas
+ ######################################################################
+ 
+-QWT_CONFIG     += QwtOpenGL
++QWT_CONFIG += QwtOpenGL
+ 
+ ######################################################################
+ # You can use the MathML renderer of the Qt solutions package to
+@@ -110,7 +110,7 @@
+ # to your qmake project file.
+ ######################################################################
+ 
+-#QWT_CONFIG     += QwtMathML
++QWT_CONFIG += QwtMathML
+ 
+ ######################################################################
+ # If you want to build the Qwt designer plugin,
+@@ -118,7 +118,7 @@
+ # Otherwise you have to build it from the designer directory.
+ ######################################################################
+ 
+-QWT_CONFIG     += QwtDesigner
++QWT_CONFIG += QwtDesigner
+ 
+ ######################################################################
+ # Compile all Qwt classes into the designer plugin instead
+@@ -133,7 +133,7 @@
+ ######################################################################
+ 
+ win32 {
+-    QWT_CONFIG     += QwtDesignerSelfContained
++    QWT_CONFIG += QwtDesignerSelfContained
+ }
+ 
+ ######################################################################
+@@ -141,7 +141,7 @@
+ # Otherwise you have to build them from the examples directory.
+ ######################################################################
+ 
+-#QWT_CONFIG     += QwtExamples
++QWT_CONFIG += QwtExamples
+ 
+ ######################################################################
+ # The playground is primarily intended for the Qwt development
+@@ -152,7 +152,7 @@
+ # Otherwise you have to build them from the playground directory.
+ ######################################################################
+ 
+-#QWT_CONFIG     += QwtPlayground
++QWT_CONFIG += QwtPlayground
+ 
+ ######################################################################
+ # When Qt has been built as framework qmake wants
+@@ -171,5 +171,5 @@
+ 
+ unix {
+ 
+-    #QWT_CONFIG     += QwtPkgConfig
++    #QWT_CONFIG += QwtPkgConfig
+ }

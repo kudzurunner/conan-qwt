@@ -1,0 +1,36 @@
+version: 1.0.{build}
+environment:
+  PYTHON: C:\Python37-x64
+  PYTHON_VERSION: 3.7.1
+  PYTHON_ARCH: 64
+  CONAN_UPLOAD: https://api.bintray.com/conan/kudzurunner/conan-stable
+  CONAN_REMOTE: conan-qwt
+  CONAN_REFERENCE: qwt/6.1.4
+  CONAN_USERNAME: kudzurunner
+  CONAN_CHANNEL: stable
+  CONAN_PASSWORD:
+    secure: FHRzS1Qt5LEb3S+po6y9BkjaPm/d5gv56M9ZC90wpJVIJs/f4ljLdVoXhbqk4jEZ
+  matrix:
+  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+    CONAN_VISUAL_VERSIONS: 14
+    CONAN_VISUAL_RUNTIMES: "MD,MDd"
+  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    CONAN_VISUAL_VERSIONS: 15
+    CONAN_VISUAL_RUNTIMES: "MD,MDd"
+install:
+- cmd: >-
+    set PATH=%PYTHON%;%PYTHON%/Scripts/;%PATH%
+
+    pip install conan --upgrade
+
+    pip install conan_package_tools
+
+    conan remote add conan-stable https://api.bintray.com/conan/kudzurunner/conan-stable
+
+    conan remote add bincrafters https://api.bintray.com/conan/bincrafters/public-conan
+
+    conan user
+build: off
+test_script:
+- cmd: python build.py
+deploy: off
