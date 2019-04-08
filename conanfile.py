@@ -34,7 +34,7 @@ class QwtConan(ConanFile):
     generators = "qmake"
     source_name = "{}-{}".format(name, version)
     requires = (
-        "qt/5.12.1@bincrafters/stable"
+        "qt/5.12.2@bincrafters/stable"
     )
     exports = (
         "patches/*.patch")
