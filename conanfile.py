@@ -85,9 +85,9 @@ class QwtConan(ConanFile):
             if self.settings.os == "Windows":
                 env_build = VisualStudioBuildEnvironment(self)
                 with tools.environment_append(env_build.vars):
-                    vcvars = tools.vcvars_command(self.settings)
-                    self.run("%s && %s" % (vcvars, qmake))
-                    self.run("%s && jom -j%d" % (vcvars, tools.cpu_count()))
+                    #vcvars = tools.vcvars_command(self.settings)
+                    self.run(qmake)
+                    self.run("jom -j%d" % (tools.cpu_count()))
             else:
                 self.run("%s && make -j%d" % (qmake, tools.cpu_count()))
 
@@ -100,5 +100,4 @@ class QwtConan(ConanFile):
         self.copy("*.a", dst="lib", keep_path=False)
 
     def package_info(self):
-        suffix = "d" if self.settings.build_type == "Debug" else ""
-        self.cpp_info.libs = ["qwt" + suffix]
+        self.cpp_info.libs = ["qwt"]
